@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../config/database");
+const review = require("./review");
 const userComic = require("./userComic");
 
 const comic = sequelize.define('comic', {
@@ -50,5 +51,8 @@ const comic = sequelize.define('comic', {
 
 comic.hasMany(userComic, {foreignKey: 'comicId', as: 'userComics'});
 userComic.belongsTo(comic, {foreignKey: 'comicId', as: 'comic'});
+
+comic.hasMany(review, {foreignKey: 'comicId', as:'reviews'});
+review.belongsTo(comic, {foreignKey: 'comicId', as: 'comic'});
 
 module.exports = comic;

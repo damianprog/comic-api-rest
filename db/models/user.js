@@ -10,6 +10,7 @@ const sequelize = require('../../config/database');
 const AppError = require('../../utils/appError');
 const userDetails = require('./userDetails');
 const userComic = require('./userComic');
+const review = require('./review');
 
 const user = sequelize.define('user', {
   id: {
@@ -104,5 +105,8 @@ userDetails.belongsTo(user, {foreignKey: 'userId'});
 
 user.hasMany(userComic, {foreignKey: 'userId', as: 'userComics'});
 userComic.belongsTo(user, {foreignKey: 'userId', as: 'user'});
+
+user.hasMany(review, {foreignKey: 'userId', as: 'reviews'});
+review.belongsTo(user, {foreignKey: 'userId', as : 'user'});
 
 module.exports = user;

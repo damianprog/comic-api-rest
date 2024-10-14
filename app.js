@@ -6,6 +6,7 @@ const authRouter = require('./route/authRoute');
 const userDetailsRouter = require('./route/userDetailsRoute');
 const comicRouter = require('./route/comicRoute');
 const userComicRouter = require('./route/userComicRoute');
+const reviewRouter = require('./route/reviewRoute');
 const AppError = require('./utils/appError');
 const catchAsync = require('./utils/catchAsync');
 
@@ -17,6 +18,7 @@ app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/userDetails', userDetailsRouter);
 app.use('/api/v1/comic', comicRouter)
 app.use('/api/v1/userComic', userComicRouter);
+app.use('/api/v1/review', reviewRouter);
 
 app.use('*', 
     catchAsync(async (req, res, next) => {
