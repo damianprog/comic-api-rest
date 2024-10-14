@@ -1,37 +1,27 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../config/database");
 
-module.exports = sequelize.define('userDetails', {
+module.exports = sequelize.define('userComic', {
   id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: DataTypes.INTEGER
   },
-  profileImage: {
+  category: {
     type: DataTypes.STRING
   },
-  backgroundImage: {
-    type: DataTypes.STRING
-  },
-  profileImagePublicId: {
-    type: DataTypes.STRING,
-    defaultValue: '',
-  },
-  backgroundImagePublicId: {
-    type: DataTypes.STRING,
-    defaultValue: '',
-  },
-  about: {
-    type: DataTypes.STRING,
-    defaultValue: '',
-  },
-  interests: {
-    type: DataTypes.STRING,
-    defaultValue: '',
+  comicId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'comic',
+      key: 'id'
+    }
   },
   userId: {
     type: DataTypes.INTEGER,
+    allowNull: false,
     references: {
       model: 'user',
       key: 'id'
@@ -47,6 +37,6 @@ module.exports = sequelize.define('userDetails', {
   }
 }, {
   freezeTableName: true,
-  tableName: 'userDetails',
-  modelName: 'userDetails'
+  tableName: 'userComic',
+  modelName: 'userComic'
 });

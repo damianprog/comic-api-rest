@@ -1,10 +1,11 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../config/database");
+const userComic = require("./userComic");
 
-module.exports = sequelize.define('comic', {
+const comic = sequelize.define('comic', {
   id: {
     primaryKey: true,
-    type: DataTypes.STRING
+    type: DataTypes.INTEGER
   },
   title: {
     type: DataTypes.STRING
@@ -46,3 +47,8 @@ module.exports = sequelize.define('comic', {
   tableName: 'comic',
   modelName: 'comic'
 });
+
+comic.hasMany(userComic, {foreignKey: 'comicId', as: 'userComics'});
+userComic.belongsTo(comic, {foreignKey: 'comicId', as: 'comic'});
+
+module.exports = comic;

@@ -5,6 +5,7 @@ const globalErrorHandler = require('./controller/errorController');
 const authRouter = require('./route/authRoute');
 const userDetailsRouter = require('./route/userDetailsRoute');
 const comicRouter = require('./route/comicRoute');
+const userComicRouter = require('./route/userComicRoute');
 const AppError = require('./utils/appError');
 const catchAsync = require('./utils/catchAsync');
 
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/userDetails', userDetailsRouter);
 app.use('/api/v1/comic', comicRouter)
+app.use('/api/v1/userComic', userComicRouter);
 
 app.use('*', 
     catchAsync(async (req, res, next) => {

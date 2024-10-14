@@ -9,6 +9,7 @@ const bcrypt = require('bcrypt');
 const sequelize = require('../../config/database');
 const AppError = require('../../utils/appError');
 const userDetails = require('./userDetails');
+const userComic = require('./userComic');
 
 const user = sequelize.define('user', {
   id: {
@@ -100,5 +101,8 @@ const user = sequelize.define('user', {
 
 user.hasOne(userDetails, {foreignKey: 'userId'});
 userDetails.belongsTo(user, {foreignKey: 'userId'});
+
+user.hasMany(userComic, {foreignKey: 'userId', as: 'userComics'});
+userComic.belongsTo(user, {foreignKey: 'userId', as: 'user'});
 
 module.exports = user;

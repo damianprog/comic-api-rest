@@ -2,34 +2,23 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('userDetails', {
+    await queryInterface.createTable('userComic', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      profileImage: {
+      category: {
         type: Sequelize.STRING
       },
-      backgroundImage: {
-        type: Sequelize.STRING
-      },
-      profileImagePublicId: {
-        type: Sequelize.STRING,
-        defaultValue: '',
-      },
-      backgroundImagePublicId: {
-        type: Sequelize.STRING,
-        defaultValue: '',
-      },
-      about: {
-        type: Sequelize.STRING,
-        defaultValue: '',
-      },
-      interests: {
-        type: Sequelize.STRING,
-        defaultValue: '',
+      comicId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'comic',
+          key: 'id'
+        }
       },
       userId: {
         type: Sequelize.INTEGER,
@@ -50,6 +39,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('userDetails');
+    await queryInterface.dropTable('userComic');
   }
 };
