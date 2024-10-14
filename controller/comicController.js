@@ -55,4 +55,16 @@ const updateComic = catchAsync(async (req, res, next) => {
     });
 });
 
-module.exports = {createComic, updateComic}
+const getComicById = catchAsync(async (req, res, next) => {
+    const comicId = req.params.comicId;
+    const result = await comic.findByPk(comicId);
+    if(!result) {
+        throw new AppError('Invalid comic id', 400);
+    }
+    return res.json({
+        status: 'success',
+        data: result,
+    });
+});
+
+module.exports = {createComic, updateComic, getComicById}
