@@ -1,8 +1,11 @@
+const user = require('../db/models/user');
 const userDetails = require('../db/models/userDetails');
+const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
 const createUserDetails = catchAsync(async (req, res, next) => {
     const body = req.body;
+    const userId = req.user.id;
 
     const newUserDetails = await userDetails.create({
         profileImage: body.profileImage,
@@ -11,7 +14,7 @@ const createUserDetails = catchAsync(async (req, res, next) => {
         backgroundImagePublicId: body.backgroundImagePublicId,
         about: body.about,
         interests: body.interests,
-        userId: 1,
+        userId: userId,
     });
 
     return res.status(201).json({
@@ -20,4 +23,19 @@ const createUserDetails = catchAsync(async (req, res, next) => {
     });
 });
 
-module.exports = {createUserDetails}
+const getUserDetailsByUserId = catchAsync(async (req, res, next) => {
+    const userId = req.params.userId;
+    const result = await userDetails.findOne({
+        include: user,
+        where: {userId: userId}
+    });
+    if(!result) {
+        throw new AppError('UserDetails for given userId does not exist');
+    }
+    return res.json({
+        status: 'success',
+        data: result,
+    });
+});
+
+module.exports = {createUserDetails,getUserDetailsByUserId}

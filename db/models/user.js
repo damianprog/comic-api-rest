@@ -8,6 +8,7 @@ const bcrypt = require('bcrypt');
 
 const sequelize = require('../../config/database');
 const AppError = require('../../utils/appError');
+const userDetails = require('./userDetails');
 
 const user = sequelize.define('user', {
   id: {
@@ -96,5 +97,8 @@ const user = sequelize.define('user', {
   freezeTableName: true,
   modelName: 'user'
 });
+
+user.hasOne(userDetails, {foreignKey: 'userId'});
+userDetails.belongsTo(user, {foreignKey: 'userId'});
 
 module.exports = user;
